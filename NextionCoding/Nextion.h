@@ -1,7 +1,7 @@
 #include <Nextion.h>
 //#include <SoftwareSerial.h>
 
-SoftwareSerial HMISerial(34, 35);  // RX,TX
+SoftwareSerial HMISerial(35, 32);  // RX,TX
 
 
 //Page id 3 DualState Button
@@ -11,7 +11,7 @@ SoftwareSerial HMISerial(34, 35);  // RX,TX
 // //Page id 4 Text XY-MD02
 NexText textemp1 = NexText(4, 2, "texttemp1");
 NexText texhumi1 = NexText(4, 3, "texthumi1");
-
+NexVariable 
 
 //Page id 5 Progress BarXY-MD02
 NexText textemp2 = NexText(5, 4, "texttemp2");
@@ -85,65 +85,71 @@ NexGauge guagehumi1 = NexGauge(6, 4, "z1");
 //   HMISerial.write(0xff);
 //   HMISerial.write(0xff);
 // }
-void endNextionCommand() {
-  Serial.write(0xff);
-  Serial.write(0xff);
-  Serial.write(0xff);
-}
+// void endNextionCommand() {
+//   Serial.write(0xff);
+//   Serial.write(0xff);
+//   Serial.write(0xff);
+// }
+
+
 
 void NexSetup() {
   nexInit();  //initial Nextion
-  //2CH Relay
-  //   bt0.attachPush(bt0PushCallback, &bt0);
-  //   bt1.attachPush(bt1PushCallback, &bt1);
- // HMISerial.begin(9600);
+              //2CH Relay
+              //   bt0.attachPush(bt0PushCallback, &bt0);
+              //   bt1.attachPush(bt1PushCallback, &bt1);
+              //HMISerial.begin(9600);
 }
 
-void Nexloop() {
+void NexRead() {
   char atemp[6];
-  dtostrf(temp, 6, 2, atemp);
-  //  String ahum = String(hum);
-   textemp1.setText(atemp);
+  dtostrf(temp, 6, 1, atemp);
+
+  char ahum[6];
+  dtostrf(hum, 6, 1, ahum);
+
+  textemp1.setText(atemp);
+  texhumi1.setText(ahum);
 
   //page 4
   // String command = "texttemp1.txt=\"" + String(temp) + "\"";
   // HMISerial.print(command);
   // endNextionCommand();
 
-  String command1 = "texthumi1.txt=\"" + String(hum) + "\"";
-  HMISerial.print(command1);
-  endNextionCommand();
+  // String command1 = "texthumi1.txt=\"" + String(hum) + "\"";
+  // HMISerial.print(command1);
+  // endNextionCommand();
 
-  String command2 = "texttemp2.txt=\"" + String(temp) + "\"";
-  Serial.print(command2);
-  endNextionCommand();
+  // String command2 = "texttemp2.txt=\"" + String(temp) + "\"";
+  // Serial.print(command2);
+  // endNextionCommand();
 
-  String command3 = "texthumi2.txt=\"" + String(hum) + "\"";
-  Serial.print(command3);
-  endNextionCommand();
+  // String command3 = "texthumi2.txt=\"" + String(hum) + "\"";
+  // Serial.print(command3);
+  // endNextionCommand();
 
 
-  int val1 = map(temp, 0, 100, 0, 180);
-  int val2 = map(hum, 0, 100, 0, 180);
-  int val3 = map(temp, 0, 100, 0, 100);
-  int val4 = map(hum, 0, 100, 0, 100);
-  //pgtemp1.setValue(temp);
-  Serial.print("pgtemp1.val=");
-  Serial.print(val3);
-  endNextionCommand();
+  // int val1 = map(temp, 0, 100, 0, 180);
+  // int val2 = map(hum, 0, 100, 0, 180);
+  // int val3 = map(temp, 0, 100, 0, 100);
+  // int val4 = map(hum, 0, 100, 0, 100);
+  // //pgtemp1.setValue(temp);
+  // Serial.print("pgtemp1.val=");
+  // Serial.print(val3);
+  // endNextionCommand();
 
-  //pghumi1.setValue(hum);
-  Serial.print("pghumi1.val=");
-  Serial.print(val4);
-  endNextionCommand();
+  // //pghumi1.setValue(hum);
+  // Serial.print("pghumi1.val=");
+  // Serial.print(val4);
+  // endNextionCommand();
 
-  //Page 5 Guage XY-MD02
+  // //Page 5 Guage XY-MD02
 
-  Serial.print("z0.val=");  //Send the object tag
-  Serial.print(val1);       //Send the value
-  endNextionCommand();
+  // Serial.print("z0.val=");  //Send the object tag
+  // Serial.print(val1);       //Send the value
+  // endNextionCommand();
 
-  Serial.print("z1.val=");  //Send the object tag
-  Serial.print(val2);       //Send the value
-  endNextionCommand();
+  // Serial.print("z1.val=");  //Send the object tag
+  // Serial.print(val2);       //Send the value
+  // endNextionCommand();
 }

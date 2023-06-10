@@ -27,12 +27,12 @@ void MD02Read()
    
     temp = node.getResponseBuffer(0) / 10.0f;
     hum = node.getResponseBuffer(1) / 10.0f;
-    // Serial.print("Temp: ");
-    // Serial.println(temp);
-    // Serial.print("Humi: ");
-    // Serial.println(hum);
-    // Serial.println();
-    Nexloop();
+    Serial.print("Temp: ");
+    Serial.println(temp);
+    Serial.print("Humi: ");
+    Serial.println(hum);
+    Serial.println();
+    NexRead();
 
   }
 }

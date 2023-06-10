@@ -6,7 +6,7 @@ float temp, hum;
 
 unsigned long currentmillis;
 unsigned long previousMillis = 0;
-unsigned long interval = 5000;
+unsigned long interval = 1000;
 
 void setup() {
   // put your setup code here, to run once:
@@ -22,4 +22,5 @@ void loop() {
     MD02Read();
     previousMillis = currentmillis;
   }
+  //nexLoop(nex_listen_list);
 }
