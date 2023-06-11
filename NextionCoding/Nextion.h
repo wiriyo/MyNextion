@@ -4,152 +4,182 @@
 SoftwareSerial HMISerial(35, 32);  // RX,TX
 
 
+
+
+//==========Define IO connect to relay==========//
+#define sw1 25
+#define sw2 26
+
+NexVariable vaTemp = NexVariable(4, 8, "vatemp");
+NexVariable vaHum = NexVariable(4, 10, "vahum");
+NexVariable vvalTemp = NexVariable(4, 11, "vvaltemp");
+NexVariable vvalHum = NexVariable(4, 12, "vvalhum");
+NexVariable vzTemp = NexVariable(4, 13, "vztemp");
+NexVariable vzHum = NexVariable(4, 14, "vzhum");
+
+
 //Page id 3 DualState Button
-// NexButton bt0 = NexButton(3, 2, "bt0");
-// NexButton bt1 = NexButton(3, 3, "bt1");
-
-// //Page id 4 Text XY-MD02
-NexText textemp1 = NexText(4, 2, "texttemp1");
-NexText texhumi1 = NexText(4, 3, "texthumi1");
-NexVariable 
-
-//Page id 5 Progress BarXY-MD02
-NexText textemp2 = NexText(5, 4, "texttemp2");
-NexText texhumi2 = NexText(5, 5, "texthumi2");
-NexProgressBar pgtemp1 = NexProgressBar(5, 2, "pgtemp1");
-NexProgressBar pghumi1 = NexProgressBar(5, 3, "pghumi1");
-
-//Page id 6 Guage XY-MD02
-NexGauge guagetemp1 = NexGauge(6, 3, "z0");
-NexGauge guagehumi1 = NexGauge(6, 4, "z1");
+NexButton bt0 = NexButton(3, 2, "bt0");
+NexButton bt1 = NexButton(3, 3, "bt1");
 
 
 //Page id 8 Modbus Relay
-// NexButton bt2 = NexButton(7, 2, "bt2");
-// NexButton bt3 = NexButton(7, 3, "bt3");
-// NexButton bt4 = NexButton(7, 4, "bt4");
-// NexButton bt5 = NexButton(7, 5, "bt5");
+NexButton bt2 = NexButton(7, 2, "bt2");
+NexButton bt3 = NexButton(7, 3, "bt3");
+NexButton bt4 = NexButton(7, 4, "bt4");
+NexButton bt5 = NexButton(7, 5, "bt5");
 
-// Declare variable global
-// bool statusbt0 = false;
-// bool statusbt1 = false;
-// //Modbus Relay
-// // bool statusbt2 = false;
-// // bool statusbt3 = false;
-// // bool statusbt4 = false;
-// // bool statusbt5 = false;
+//Declare variable global
+bool statusbt0 = false;
+bool statusbt1 = false;
 
-// // Register objects to the touch event list
-// NexTouch *nex_listen_list[] = {
+//Modbus Relay
+bool statusbt2 = false;
+bool statusbt3 = false;
+bool statusbt4 = false;
+bool statusbt5 = false;
 
-//   &bt0,
-//   &bt1,
+// Register objects to the touch event list
+NexTouch *nex_listen_list[] = {
 
-//   // &bt2,
-//   // &bt3,
-//   // &bt4,
-//   // &bt5,
+  &bt0,
+  &bt1,
 
-//   NULL
-// };
+  &bt2,
+  &bt3,
+  &bt4,
+  &bt5,
+
+  NULL
+};
 //=========Nextion Library and Object==========//
 
-//==========Define IO connect to relay==========//
-// #define sw1 19
-// #define sw2 18
-
-// //================ON,OFF Relay1=================//
-// void bt0PushCallback(void *ptr) {
-//   if (statusbt0 == false) {
-//     digitalWrite(sw1, LOW);
-//     statusbt0 = true;
-//   } else if (statusbt0 == true) {
-//     digitalWrite(sw1, HIGH);
-//     statusbt0 = false;
+// //==========Modbus Relay============//
+// //==========ON,OFF MRelay1==========//
+// void bt2PushCallback(void *ptr) {
+//   if (statusbt2 == false) {
+//     pool_size1 = node1.writeSingleRegister(0x01, 0x0100);
+//     //relayControl_modbusRTU(2, 1, 1);
+//     //digitalWrite(sw1, LOW);
+//     statusbt2 = true;
+//   } else if (statusbt2 == true) {
+//     pool_size1 = node1.writeSingleRegister(0x01, 0x0200);
+//     //relayControl_modbusRTU(2, 1, 0);
+//     //digitalWrite(sw1, HIGH);
+//     statusbt2 = false;
 //   }
 // }
-// //================ON,OFF Relay1=================//
+//==========ON,OFF MRelay1==========//
 
-// //=================ON,OFF Relay2================//
-// void bt1PushCallback(void *ptr) {
-//   if (statusbt1 == false) {
-//     digitalWrite(sw2, LOW);
-//     statusbt1 = true;
-//   } else {
-//     digitalWrite(sw2, HIGH);
-//     statusbt1 = false;
+// //==========ON,OFF MRelay2==========//
+// void bt3PushCallback(void *ptr) {
+//   if (statusbt3 == false) {
+//     pool_size1 = node1.writeSingleRegister(0x02, 0x0100);
+//     //relayControl_modbusRTU(2, 2, 1);
+//     //digitalWrite(sw1, LOW);
+//     statusbt3 = true;
+//   } else if (statusbt3 == true) {
+//     pool_size1 = node1.writeSingleRegister(0x02, 0x0200);
+//     //relayControl_modbusRTU(2, 2, 0);
+//     //digitalWrite(sw1, HIGH);
+//     statusbt3 = false;
 //   }
 // }
-// void endNextionCommand() {
-//   HMISerial.write(0xff);
-//   HMISerial.write(0xff);
-//   HMISerial.write(0xff);
-// }
-// void endNextionCommand() {
-//   Serial.write(0xff);
-//   Serial.write(0xff);
-//   Serial.write(0xff);
-// }
+// //==========ON,OFF MRelay2==========//
 
+// //==========ON,OFF MRelay3==========//
+// void bt4PushCallback(void *ptr) {
+//   if (statusbt4 == false) {
+//     pool_size1 = node1.writeSingleRegister(0x03, 0x0100);
+//     //relayControl_modbusRTU(2, 3, 1);
+//     //digitalWrite(sw1, LOW);
+//     statusbt4 = true;
+//   } else if (statusbt4 == true) {
+//     pool_size1 = node1.writeSingleRegister(0x03, 0x0200);
+//     //relayControl_modbusRTU(2, 3, 0);
+//     //digitalWrite(sw1, HIGH);
+//     statusbt4 = false;
+//   }
+// }
+// //==========ON,OFF MRelay3==========//
+
+// //==========ON,OFF MRelay4==========//
+// void bt5PushCallback(void *ptr) {
+//   if (statusbt5 == false) {
+//     pool_size1 = node1.writeSingleRegister(0x04, 0x0100);
+//     //relayControl_modbusRTU(2, 4, 1);
+//     //digitalWrite(sw1, LOW);
+//     statusbt5 = true;
+//   } else if (statusbt5 == true) {
+//     pool_size1 = node1.writeSingleRegister(0x04, 0x0200);
+//     //relayControl_modbusRTU(2, 4, 0);
+//     //digitalWrite(sw1, HIGH);
+//     statusbt5 = false;
+//   }
+// }
+// //==========ON,OFF MRelay4==========//
+// //==========Modbus Relay============//
+
+
+//================ON,OFF Relay1=================//
+void bt0PushCallback(void *ptr) {
+  if (statusbt0 == false) {
+    digitalWrite(sw1, LOW);
+    statusbt0 = true;
+  } else if (statusbt0 == true) {
+    digitalWrite(sw1, HIGH);
+    statusbt0 = false;
+  }
+}
+//================ON,OFF Relay1=================//
+
+//=================ON,OFF Relay2================//
+void bt1PushCallback(void *ptr) {
+  if (statusbt1 == false) {
+    digitalWrite(sw2, LOW);
+    statusbt1 = true;
+  } else {
+    digitalWrite(sw2, HIGH);
+    statusbt1 = false;
+  }
+}
 
 
 void NexSetup() {
   nexInit();  //initial Nextion
-              //2CH Relay
-              //   bt0.attachPush(bt0PushCallback, &bt0);
-              //   bt1.attachPush(bt1PushCallback, &bt1);
-              //HMISerial.begin(9600);
+  pinMode(sw1, OUTPUT);
+  pinMode(sw2, OUTPUT);
+  digitalWrite(sw1, HIGH);
+  digitalWrite(sw2, HIGH);
+  //2CH Relay
+  bt0.attachPush(bt0PushCallback, &bt0);
+  bt1.attachPush(bt1PushCallback, &bt1);
+
+  //4CH Modbus
+  bt2.attachPush(bt2PushCallback, &bt2);
+  bt3.attachPush(bt3PushCallback, &bt3);
+  bt4.attachPush(bt4PushCallback, &bt4);
+  bt5.attachPush(bt5PushCallback, &bt5);
 }
 
 void NexRead() {
+
   char atemp[6];
-  dtostrf(temp, 6, 1, atemp);
+  dtostrf(temp, 5, 1, atemp);
 
   char ahum[6];
-  dtostrf(hum, 6, 1, ahum);
+  dtostrf(hum, 5, 1, ahum);
 
-  textemp1.setText(atemp);
-  texhumi1.setText(ahum);
-
-  //page 4
-  // String command = "texttemp1.txt=\"" + String(temp) + "\"";
-  // HMISerial.print(command);
-  // endNextionCommand();
-
-  // String command1 = "texthumi1.txt=\"" + String(hum) + "\"";
-  // HMISerial.print(command1);
-  // endNextionCommand();
-
-  // String command2 = "texttemp2.txt=\"" + String(temp) + "\"";
-  // Serial.print(command2);
-  // endNextionCommand();
-
-  // String command3 = "texthumi2.txt=\"" + String(hum) + "\"";
-  // Serial.print(command3);
-  // endNextionCommand();
+  int val1 = map(temp, 0, 100, 0, 180);
+  int val2 = map(hum, 0, 100, 0, 180);
+  int val3 = map(temp, 0, 100, 0, 100);
+  int val4 = map(hum, 0, 100, 0, 100);
 
 
-  // int val1 = map(temp, 0, 100, 0, 180);
-  // int val2 = map(hum, 0, 100, 0, 180);
-  // int val3 = map(temp, 0, 100, 0, 100);
-  // int val4 = map(hum, 0, 100, 0, 100);
-  // //pgtemp1.setValue(temp);
-  // Serial.print("pgtemp1.val=");
-  // Serial.print(val3);
-  // endNextionCommand();
-
-  // //pghumi1.setValue(hum);
-  // Serial.print("pghumi1.val=");
-  // Serial.print(val4);
-  // endNextionCommand();
-
-  // //Page 5 Guage XY-MD02
-
-  // Serial.print("z0.val=");  //Send the object tag
-  // Serial.print(val1);       //Send the value
-  // endNextionCommand();
-
-  // Serial.print("z1.val=");  //Send the object tag
-  // Serial.print(val2);       //Send the value
-  // endNextionCommand();
+  vaTemp.setText(atemp);
+  vaHum.setText(ahum);
+  vvalTemp.setValue(val3);
+  vvalHum.setValue(val4);
+  vzTemp.setValue(val1);
+  vzHum.setValue(val2);
 }
