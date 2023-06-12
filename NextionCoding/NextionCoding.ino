@@ -7,7 +7,7 @@ unsigned long interval = 0;
 
 unsigned long tcurrentmillis = 0;
 unsigned long tpreviousMillis = 0;
-unsigned long tinterval = 3e5;
+unsigned long tinterval = 15e5;
 
 void MD02setup();
 void MD02Read();
