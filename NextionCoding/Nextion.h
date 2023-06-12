@@ -2,9 +2,7 @@
 //#include <SoftwareSerial.h>
 
 SoftwareSerial HMISerial(35, 32);  // RX,TX
-
-
-
+ModbusMaster node1;
 
 //==========Define IO connect to relay==========//
 #define sw1 25
@@ -17,11 +15,9 @@ NexVariable vvalHum = NexVariable(4, 12, "vvalhum");
 NexVariable vzTemp = NexVariable(4, 13, "vztemp");
 NexVariable vzHum = NexVariable(4, 14, "vzhum");
 
-
 //Page id 3 DualState Button
 NexButton bt0 = NexButton(3, 2, "bt0");
 NexButton bt1 = NexButton(3, 3, "bt1");
-
 
 //Page id 8 Modbus Relay
 NexButton bt2 = NexButton(7, 2, "bt2");
@@ -54,73 +50,6 @@ NexTouch *nex_listen_list[] = {
 };
 //=========Nextion Library and Object==========//
 
-// //==========Modbus Relay============//
-// //==========ON,OFF MRelay1==========//
-// void bt2PushCallback(void *ptr) {
-//   if (statusbt2 == false) {
-//     pool_size1 = node1.writeSingleRegister(0x01, 0x0100);
-//     //relayControl_modbusRTU(2, 1, 1);
-//     //digitalWrite(sw1, LOW);
-//     statusbt2 = true;
-//   } else if (statusbt2 == true) {
-//     pool_size1 = node1.writeSingleRegister(0x01, 0x0200);
-//     //relayControl_modbusRTU(2, 1, 0);
-//     //digitalWrite(sw1, HIGH);
-//     statusbt2 = false;
-//   }
-// }
-//==========ON,OFF MRelay1==========//
-
-// //==========ON,OFF MRelay2==========//
-// void bt3PushCallback(void *ptr) {
-//   if (statusbt3 == false) {
-//     pool_size1 = node1.writeSingleRegister(0x02, 0x0100);
-//     //relayControl_modbusRTU(2, 2, 1);
-//     //digitalWrite(sw1, LOW);
-//     statusbt3 = true;
-//   } else if (statusbt3 == true) {
-//     pool_size1 = node1.writeSingleRegister(0x02, 0x0200);
-//     //relayControl_modbusRTU(2, 2, 0);
-//     //digitalWrite(sw1, HIGH);
-//     statusbt3 = false;
-//   }
-// }
-// //==========ON,OFF MRelay2==========//
-
-// //==========ON,OFF MRelay3==========//
-// void bt4PushCallback(void *ptr) {
-//   if (statusbt4 == false) {
-//     pool_size1 = node1.writeSingleRegister(0x03, 0x0100);
-//     //relayControl_modbusRTU(2, 3, 1);
-//     //digitalWrite(sw1, LOW);
-//     statusbt4 = true;
-//   } else if (statusbt4 == true) {
-//     pool_size1 = node1.writeSingleRegister(0x03, 0x0200);
-//     //relayControl_modbusRTU(2, 3, 0);
-//     //digitalWrite(sw1, HIGH);
-//     statusbt4 = false;
-//   }
-// }
-// //==========ON,OFF MRelay3==========//
-
-// //==========ON,OFF MRelay4==========//
-// void bt5PushCallback(void *ptr) {
-//   if (statusbt5 == false) {
-//     pool_size1 = node1.writeSingleRegister(0x04, 0x0100);
-//     //relayControl_modbusRTU(2, 4, 1);
-//     //digitalWrite(sw1, LOW);
-//     statusbt5 = true;
-//   } else if (statusbt5 == true) {
-//     pool_size1 = node1.writeSingleRegister(0x04, 0x0200);
-//     //relayControl_modbusRTU(2, 4, 0);
-//     //digitalWrite(sw1, HIGH);
-//     statusbt5 = false;
-//   }
-// }
-// //==========ON,OFF MRelay4==========//
-// //==========Modbus Relay============//
-
-
 //================ON,OFF Relay1=================//
 void bt0PushCallback(void *ptr) {
   if (statusbt0 == false) {
@@ -144,9 +73,59 @@ void bt1PushCallback(void *ptr) {
   }
 }
 
+//==========Modbus Relay============//
+//==========ON,OFF MRelay1==========//
+void bt2PushCallback(void *ptr) {
+  if (statusbt2 == false) {
+    pool_size1 = node1.writeSingleRegister(0x01, 0x0100);
+    statusbt2 = true;
+  } else if (statusbt2 == true) {
+    pool_size1 = node1.writeSingleRegister(0x01, 0x0200);
+    statusbt2 = false;
+  }
+}
+//==========ON,OFF MRelay1==========//
+
+//==========ON,OFF MRelay2==========//
+void bt3PushCallback(void *ptr) {
+  if (statusbt3 == false) {
+    pool_size1 = node1.writeSingleRegister(0x02, 0x0100);
+    statusbt3 = true;
+  } else if (statusbt3 == true) {
+    pool_size1 = node1.writeSingleRegister(0x02, 0x0200);
+    statusbt3 = false;
+  }
+}
+//==========ON,OFF MRelay2==========//
+
+//==========ON,OFF MRelay3==========//
+void bt4PushCallback(void *ptr) {
+  if (statusbt4 == false) {
+    pool_size1 = node1.writeSingleRegister(0x03, 0x0100);
+    statusbt4 = true;
+  } else if (statusbt4 == true) {
+    pool_size1 = node1.writeSingleRegister(0x03, 0x0200);
+    statusbt4 = false;
+  }
+}
+//==========ON,OFF MRelay3==========//
+
+//==========ON,OFF MRelay4==========//
+void bt5PushCallback(void *ptr) {
+  if (statusbt5 == false) {
+    pool_size1 = node1.writeSingleRegister(0x04, 0x0100);
+    statusbt5 = true;
+  } else if (statusbt5 == true) {
+    pool_size1 = node1.writeSingleRegister(0x04, 0x0200);
+    statusbt5 = false;
+  }
+}
+//==========ON,OFF MRelay4==========//
+//==========Modbus Relay============//
 
 void NexSetup() {
   nexInit();  //initial Nextion
+  node1.begin(2, Serial2);
   pinMode(sw1, OUTPUT);
   pinMode(sw2, OUTPUT);
   digitalWrite(sw1, HIGH);
