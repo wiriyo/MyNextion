@@ -1,5 +1,4 @@
 #include <Nextion.h>
-//#include <SoftwareSerial.h>
 
 SoftwareSerial HMISerial(35, 32);  // RX,TX
 ModbusMaster node1;
@@ -153,7 +152,6 @@ void NexRead() {
   int val2 = map(hum, 0, 100, 0, 180);
   int val3 = map(temp, 0, 100, 0, 100);
   int val4 = map(hum, 0, 100, 0, 100);
-
 
   vaTemp.setText(atemp);
   vaHum.setText(ahum);

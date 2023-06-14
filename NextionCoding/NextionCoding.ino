@@ -15,7 +15,8 @@ void bt2PushCallback(void *ptr);
 void bt3PushCallback(void *ptr);
 void bt4PushCallback(void *ptr);
 void bt5PushCallback(void *ptr);
-void initWiFi();
+//void initWiFi();
+void initWiFiManager();
 void sendData2GGSheet();
 void NexSetup();
 void NexRead();
@@ -25,6 +26,7 @@ void NexRead();
 #include "MD02.h"
 #include "Nextion.h"
 #include "WifiConnect.h"
+#include "WifiManager.h"
 #include "GoogleSheet.h"
 
 TaskHandle_t Task1;
@@ -34,7 +36,8 @@ void setup() {
   Serial.begin(9600);
   MD02setup();
   NexSetup();
-  initWiFi();
+//  initWiFi();
+  initWiFiManager();
   Serial.print("setup() running on core ");
   Serial.println(xPortGetCoreID());
 
@@ -62,9 +65,9 @@ void loop() {
   currentmillis = millis();
   nexLoop(nex_listen_list);
   if (currentmillis - previousMillis >= interval) {
-    reconcectWifi();
+//    reconcectWifi();
     MD02Read();
     previousMillis = currentmillis;
-    interval = 60e3;
+    interval = 3e5;
   }
 }

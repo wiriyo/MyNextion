@@ -1,10 +1,11 @@
 #include <WiFi.h>
 #include <WiFiClient.h>
 
-char ssid[] = "phonpandao_wifi";
-char pass[] = "musiccoff";
+// char ssid[] = "phonpandao_wifi";
+// char pass[] = "musiccoff";
+char ssid[] = "";
+char pass[] = "";
 int wifiFlag = 0;
-
 
 void initWiFi() {
   pinMode(wifiLed, OUTPUT);

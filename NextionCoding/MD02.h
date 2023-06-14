@@ -23,20 +23,7 @@ void MD02Read() {
     Serial.println(temp);
     Serial.print("Humi: ");
     Serial.println(hum);
-    Serial.println(count);
     NexRead();
-    // count++;
-    // if (count == 15) {
-    //   sendData2GGSheet();
-
-    //   for (int i = 0; i <= 5; i++) {
-    //     bool ledStat = digitalRead(wifiLed);
-    //     ledStat = !ledStat;
-    //     digitalWrite(wifiLed, ledStat);
-    //     delay(150);
-    //   }
-    //   count = 0;
-    // }
     for (int i = 0; i <= 5; i++) {
       bool ledStat = digitalRead(wifiLed);
       ledStat = !ledStat;
